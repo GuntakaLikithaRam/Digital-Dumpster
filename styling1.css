@@ -1,0 +1,46 @@
+
+.one{
+  position: absolute;
+  left: 67%;
+  right: 100%;
+  width: 30%;
+  height: 40%;
+  top: 40%;
+}
+.topnav {
+    background-color: rgb(201, 212, 250);
+    overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: right ;
+    color: #0e0101;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+   .topnav a:hover {
+    background-color: #6E1FDA;
+    color: #f3eef9;
+  } 
+  * {
+    box-sizing: border-box;
+    }
+    .imageColumn {
+    float: left;
+    width: 25%;
+    padding: 10px;
+    }
+    h1{
+    text-align: left;
+    }
+
+#demoAccordion
+{
+  display: block;
+  width: 65%;
+}

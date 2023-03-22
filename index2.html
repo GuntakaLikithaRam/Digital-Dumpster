@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="styling3.css" rel="stylesheet">
+</head>
+<body>
+  <div class="topnav">
+    <img src="logo.jpg" alt="..." style="width: 100px; height: 100px; float: left;">
+    <a href="contact.html" style="font-size: x-large;">Contact</a>
+    <a href="aboutus.html" style="font-size: x-large;">About Us</a>
+    <a href="index.html" style="font-size: x-large;">Home</a>
+  </div>
+    <h1>Upload Photo Form</h1>
+    <form id="upload-form" name="google-sheet">
+      <label for="name-input">Name:</label>
+      <input type="text" id="name-input" name="nameinput" placeholder="Enter your name" required>
+
+      <label for="message-input" >Message:</label>
+      <textarea rows="4"  id="message-input" name="messageinput" placeholder="Exact location of dump => any landmarks" required></textarea>
+
+      <label for="mail-input">Email:</label>
+      <input type="email" id="mail-input" name="mailinput" placeholder="Enter your mail id" required>
+
+      <div class="drag-area">
+        <header>Upload an image</header><br>
+        <input class="photo-upload" type="file" id="photo-input" name="photo-input" required >
+      </div>
+
+      <label for="location-input">Location:</label>
+      <select id="dropdown" name="locationinput" required>
+        <option value="Vijayawada">Vijayawada</option>
+        <option value="Vizag">Vizag</option>
+        <option value="Hyderabad">Hyderabad</option>
+        <option value="Hyderabad">Guntur</option>
+        <option value="Hyderabad">Kammam</option>
+        <option value="Hyderabad">Chennai</option>
+        <option value="Hyderabad">Bangalore</option>
+      </select>
+      <br><br>
+      <label  for="message-input" >Generate Id:</label><br>
+      <input class="id-txt" type = "text" id="id" name="id">
+      <button class="id-btn" type = "button" onclick="seconds()">Get Id Number</button>
+      <script>
+       function seconds(){
+        var date = new Date();
+        var GetUrId = date.getTime();
+        document.getElementById("id").value = GetUrId;
+       }
+      </script><br>
+      <input type="submit" value="Submit" class="submit-btn">
+
+    </form>
+
+    
+    <div id="myMap">
+      <iframe id="google_map" src="https://maps.google.co.uk?output=embed"></iframe>
+   </div>
+
+    <script src="https://smtpjs.com/v3/smtp.js">
+    </script>
+    //upload to google sheets
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbw-i9a2RxUT_ZNpvZgRMK7go-XB36vatk0gyg_rybvQnA_qb1bb4bnTWLULpxgQKhY8PA/exec'
+  const form = document.forms['google-sheet']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => alert("Thanks for Contacting us..! We Will Contact You Soon..."))
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
+<script>
+  var map, userPin,lat,long;
+  c=function(pos){
+  lat=pos.coords.latitude,
+  long=pos.coords.longitude,
+  coords=lat+", "+long;
+  document.getElementById('google_map').setAttribute('src','https://maps.google.co.uk/?q='+coords+'&z=60&output=embed');
+  }
+  navigator.geolocation.getCurrentPosition(c);
+  
+
+    document.getElementById('upload-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var name = document.getElementById('name-input').value;
+      var id = document.getElementById('id').value;
+      var message = document.getElementById('message-input').value;
+      var sendingMail = document.getElementById('mail-input').value;
+      var imageFile = document.getElementsByName('photo-input')[0].files[0];
+      var reader = new FileReader();
+
+        var dropdown = document.getElementById("dropdown");
+        var outputLocation = document.getElementById("dropdown").value;
+			  var specificLocation = dropdown.options[dropdown.selectedIndex].value;
+
+			  // Retrieval
+			  var emailAddresses = getEmailAddresses(specificLocation);
+     
+        function getEmailAddresses(word){
+          switch(word) {
+            case "Vijayawada":
+              return ["kothuridharanipriya@gmail.com", "k.dharanipriya12@outlook.com"];
+            case "Vizag":
+              return ["20501A0594@pvpsit.ac.in", "20501A0595@pvpsit.ac.in"];
+            case "Hyderabad":
+              return ["20501A0594@pvpsit.ac.in", "20501A05E8@pvpsit.ac.in"];
+            case "Guntur":
+              return ["20501A0515@pvpsit.ac.in", "ssree210503@gmail.com"];
+            case "Kammam":
+              return ["20501A0532@pvpsit.ac.in", "luckych050603@gmail.com"];
+            case "Chennai":
+              return ["20501A0532@pvpsit.ac.in", "20501A0515@pvpsit.ac.in"];
+            case "Bangalore":
+              return ["lakshmanchillapalli222@gmail.com", "luckychillapalli222@gmail.com"];
+            default:
+              return [];
+          }
+        }
+     
+        reader.addEventListener('load', function() {
+          var imageDataUrl = reader.result;       
+
+          Email.send({
+            Host : "smtp.elasticemail.com",
+            SecureToken : 'd2621fac-8d9e-4adc-bcac-eece7acf992e',
+            To : emailAddresses,
+            From : '20501A0594@pvpsit.ac.in',
+            FromName : "The Digital Dumpster",
+            Subject : "REPORT ON GARBAGE COLLECTION",
+            Body : "I would like to draw your attention towards the prevailing unhygienic conditions of our locality due to heaps of garbage lying on the streets.We request you to look into and collect the garbage as soon as possible.Enclosing the details of the locality with attested images of evidences of un-collected garbage<br/>"+"<h2>Details: </h2>"+ "<br/>From : <br/>Name: "+name+"<br/>Mail id: "+sendingMail+ "<br/>message: "+message+ "<br/>Location: "+outputLocation+ 
+                    " --> Coordinates: "+coords+ "<br/>map url: "+"https://maps.google.co.uk/?q="+lat+"~"+long+"&z=60&output=embed"+"<br/>id : "+id+"<br/>check here : https://script.google.com/macros/s/AKfycby_onsdhE1XxfOdUOrUEDNjM6N7CMH7y13hVeoOJrwOojj9y9bKoNNV3MP1eYhimFhD/exec",
+            Attachments: [
+              {
+                name: imageFile.name,
+                data: imageDataUrl.split(',')[1],
+                cid:'myimage'
+              }
+            ]
+          }).then(
+            message => alert(message)
+          );
+      
+        });  
+      reader.readAsDataURL(imageFile);
+
+    });
+    
+  </script>
+  
+  </body>
+</html>

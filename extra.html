@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <base target="_top" />
+     <h2>FETCH DETAIL USING ID IN APPS SCRIPT ,GOOGLE SHEET AND JAVASCRIPT- WEBAPP</h2>
+     <style>
+input{
+  width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+table {
+  font-family: times;
+  border-collapse: collapse;
+  width: 50%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+  </head>
+  <body align="center">
+    <input type="text" id="id" placeholder="Enter ID"/>
+    <br>
+    <input type="submit" value="GET DETAIL" onClick="searchName()"/>
+    <hr>
+    <div id="result"></div>
+    <script>
+        var id=document.getElementById(id).value;
+        function searchName(){
+            var sheet = SpreadsheetApp.openById('AKfycbw-i9a2RxUT_ZNpvZgRMK7go-XB36vatk0gyg_rybvQnA_qb1bb4bnTWLULpxgQKhY8PA').getActiveSheet();
+            var dataRange = sheet.getDataRange();
+            var data = dataRange.getValues();
+            var results = [];
+          
+            for (var i = 0; i < data.length; i++) {
+              if (data[i][0] === id) {
+                results.push(data[i].slice(1)); // Exclude the name column from the results
+              }
+            }
+          
+            console.log(results);
+          }
+      /*function  info () {
+        let txt = document.querySelector('#id').value;
+        let updateLocation = document.querySelector('#result');
+        //you can add other element here
+        updateLocation.innerHTML = "Getting detail...";
+
+        function onFailure(error){
+          let warning = "<span style='color:red'>"+error+"</span>";
+          updateLocation.innerHTML = warning;
+        };
+        
+        function onSuccess(response){
+          let result ="<span style='color:green'>"+response+"</span>";
+          updateLocation.innerHTML = result;
+
+        };
+        google.script.run.withFailureHandler(onFailure)
+                         .withSuccessHandler(onSuccess)
+                         .submitDT(txt);
+
+      };*/
+    </script>
+  </body>
+</html>
