@@ -8,7 +8,7 @@ This website offers a functionality of storing the data in the form of a sheet w
 
 ### The user will receive the mail shown below;
 <br>
-![Screenshot (21)](https://github.com/KDHARANIPRIYA/The-Digital-Dumpster/assets/103330033/35ff19b5-5098-41c2-906f-5e9b360f6472)
+![Screenshot (21)](https://github.com/KDHARANIPRIYA/The-Digital-Dumpster/assets/103330033/fc72a6bd-390f-4bca-8159-09dd53446430)
 
 
 
